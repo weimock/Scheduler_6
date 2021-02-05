@@ -142,7 +142,7 @@
 
             <dxwschs:ASPxScheduler ID="ASPxScheduler1" runat="server" Width="107%" AppointmentDataSourceID="ObjectDataSourceAppointments" ClientInstanceName="scheduler"
                 ResourceDataSourceID="ObjectDataSourceResources" GroupType="Resource" OnHtmlTimeCellPrepared="ASPxScheduler1_HtmlTimeCellPrepared"
-                OnCustomCallback="ASPxScheduler1_CustomCallback" CssClass="shAlign">
+                OnCustomCallback="ASPxScheduler1_CustomCallback" CssClass="shAlign" OnInitAppointmentDisplayText="ASPxSchedulerControl1_InitAppointmentDisplayText">
                 <Storage>
                     <Appointments AutoRetrieveId="true">
                         <Mappings AppointmentId="ID" End="EndDate" Label="Label" ResourceId="ResourceID" Start="StartDate" Status="Status" Subject="Title" RecurrenceInfo="MyRecurrenceInfo" Type="Type" Description="Description" />

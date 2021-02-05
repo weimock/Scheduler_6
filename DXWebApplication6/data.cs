@@ -109,8 +109,8 @@ public class Pilot
     public static void GeneratePilots()
     {
         BindingList<Pilot> model = new BindingList<Pilot>();
-        model.Add(new Pilot() { pilotID = 1, pilotName = "Delayed", pilotShortName = "App1", validFlyingLisence = true });
-        model.Add(new Pilot() { pilotID = 2, pilotName = "Answered", pilotShortName = "App2", validFlyingLisence = false });
+        model.Add(new Pilot() { pilotID = 1, pilotName = "mock", pilotShortName = "m", validFlyingLisence = true });
+        model.Add(new Pilot() { pilotID = 2, pilotName = "jin", pilotShortName = "j", validFlyingLisence = false });
 
         pilots = model;
     }

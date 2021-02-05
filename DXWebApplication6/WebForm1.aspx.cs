@@ -15,15 +15,15 @@ namespace DXWebApplication6
             ASPxGridView1.DataSource = Pilot.pilots;
             ASPxGridView1.DataBind();
             ASPxScheduler1.Start = DateTime.Today;
-            //ASPxScheduler1.Storage.Appointments.Labels.Clear();
-            //ASPxScheduler1.Storage.Appointments.Labels.Add("Green", "GreenName", "MenuCaptionGreen", System.Drawing.Color.Green);
-            //ASPxScheduler1.Storage.Appointments.Labels.Add("Red", "RedName", "MenuCaptionRed", System.Drawing.Color.Red);
+            ASPxScheduler1.Storage.Appointments.Labels.Clear();
+            ASPxScheduler1.Storage.Appointments.Labels.Add("Confirmed", "Confirmed", "MenuCaptionConfirmed", System.Drawing.Color.Green);
+            ASPxScheduler1.Storage.Appointments.Labels.Add("Pending", "Pending", "MenuCaptionPending", System.Drawing.Color.Red);
 
             ASPxScheduler1.Storage.Appointments.Statuses.Clear();
-            ASPxScheduler1.Storage.Appointments.Statuses.Add("Delayed", AppointmentStatusType.Custom, "Delayed", "MenuCaptionDelayed", System.Drawing.Color.Yellow);
-            ASPxScheduler1.Storage.Appointments.Statuses.Add("Answered", AppointmentStatusType.Custom, "Answered", "MenuCaptionAnswered", System.Drawing.Color.Blue);
+            //ASPxScheduler1.Storage.Appointments.Statuses.Add("Confirmed", AppointmentStatusType.Custom, "Confirmed", "MenuCaptionConfirmed", System.Drawing.Color.Yellow);
+            //ASPxScheduler1.Storage.Appointments.Statuses.Add("Pending", AppointmentStatusType.Custom, "Pending", "MenuCaptionPending", System.Drawing.Color.Blue);
 
-            //PrepareAppointmentDialog();
+            PrepareAppointmentDialog();
         }
 
         protected void ASPxGridView1_HtmlRowPrepared(object sender, DevExpress.Web.ASPxGridViewTableRowEventArgs e)
@@ -65,28 +65,52 @@ namespace DXWebApplication6
             scheduler.Storage.RefreshData();
         }
 
-    //    void PrepareAppointmentDialog()
-    //    {
-    //        //var dialog = ASPxScheduler1.OptionsForms.DialogLayoutSettings.AppointmentDialog;
-    //        //dialog.ViewModel = new CustomAppointmentEditDialogViewModel(ASPxScheduler1);
-    //        //dialog.GenerateDefaultLayoutElements();
+        void PrepareAppointmentDialog()
+        {
+            var dialog = ASPxScheduler1.OptionsForms.DialogLayoutSettings.AppointmentDialog;
+            dialog.ViewModel = new CustomAppointmentEditDialogViewModel(ASPxScheduler1);
+            dialog.GenerateDefaultLayoutElements();
 
-    //        //dialog.FindLayoutElement("ResourceIds").ColSpan = 1;
-    //        ////dialog.InsertAfter(
-    //        ////    dialog.LayoutElements.CreateField((CustomAppointmentEditDialogViewModel m) => m.Phone),
-    //        ////    dialog.FindLayoutElement("ResourceIds")
-    //        ////);
+            dialog.FindLayoutElement("ResourceIds").ColSpan = 1;
+            //dialog.InsertAfter(
+            //    dialog.LayoutElements.CreateField((CustomAppointmentEditDialogViewModel m) => m.Phone),
+            //    dialog.FindLayoutElement("ResourceIds")
+            //);
 
-    //        //dialog.RemoveLayoutElement("Reminder");
-    //        //dialog.RemoveLayoutElement("IsAllDay");
-    //        //dialog.RemoveLayoutElement("LabelKey");
-    //        var dialog = ASPxScheduler1.OptionsForms.DialogLayoutSettings.AppointmentDialog;
-    //        dialog.ViewModel = new CustomAppointmentEditDialogViewModel(ASPxScheduler1);
-    //        dialog.GenerateDefaultLayoutElements();
+            dialog.RemoveLayoutElement("Reminder");
+            dialog.RemoveLayoutElement("IsAllDay");
+            dialog.RemoveLayoutElement("StatusKey");
+            //var dialog = ASPxScheduler1.OptionsForms.DialogLayoutSettings.AppointmentDialog;
+            //dialog.ViewModel = new CustomAppointmentEditDialogViewModel(ASPxScheduler1);
+            //dialog.GenerateDefaultLayoutElements();
 
-    //        dialog.FindLayoutElement("ResourceIds").ColSpan = 1;
-        
+            //dialog.FindLayoutElement("ResourceIds").ColSpan = 1;
 
-    //}
+
+        }
+
+        //protected void ASPxScheduler1_AppointmentFormShowing(object sender, DevExpress.Web.ASPxScheduler.AppointmentFormEventArgs e)
+        //{
+        //    e.Container.Caption = e.Container.IsNewAppointment ? "Create New Appointment" : "Edit Appointment: " + e.Appointment.Subject;
+        //}
+
+        protected void ASPxSchedulerControl1_InitAppointmentDisplayText(object sender, AppointmentDisplayTextEventArgs e)
+        {
+  
+            //apt.subject is pilotID, either call stored procedure to find pilot name or search locally
+                Appointment apt = e.Appointment;
+            Console.WriteLine(apt.Location);
+            if(apt.Location == "")
+            {
+                e.Text = String.Format("{0}", apt.Subject);
+            }
+            else
+            {
+                e.Text = String.Format("[{0}] {1}", apt.Location, apt.Subject);
+                //e.Description = String.Format("Details: {0}", apt.Description);
+            }
+
+
+        }
     }
 }
